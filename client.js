@@ -8,7 +8,7 @@ const get = async (responses) => {
       console.log(responses.counter)
     }
   } catch (err) {
-    console.error('ERR', err.message)
+    console.log(err.message)
   }
 }
 

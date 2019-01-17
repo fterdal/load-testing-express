@@ -12,16 +12,19 @@ app.get('/', (req, res, next) => {
   })
 })
 
-app.use((err, req, res, next) => {
-  console.log('ERR', err)
-  res.sendStatus(500)
-})
+// app.use((err, req, res, next) => {
+//   console.log('ERR', err)
+//   res.sendStatus(500)
+// })
 
 let responses = { counter: 0 }
 
 const PORT = 3000
 app.listen(PORT, async () => {
-  console.log(`Listening on port ${PORT}`)
-  await getTimesParallel(800, responses)
-  console.log('RESPONSES:', responses.counter)
+  console.log(`Express is up and running on port ${PORT} 🚂`)
+  const numRequests = 700
+  console.log(`About to make ${numRequests} requests...`)
+  await getTimesParallel(numRequests, responses)
+  // await getTimesSequential(numRequests, responses)
+  console.log(`Received ${responses.counter} responses!`)
 })
