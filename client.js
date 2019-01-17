@@ -1,18 +1,24 @@
 const axios = require('axios')
 
-const get = async () => {
-  console.log('BEFORE')
-  const { data: { message } }  = await axios.get('http://localhost:3000/')
-  console.log('AFTER', message)
+const get = async (responses) => {
+  await axios.get('http://localhost:3000/')
+  responses.counter++
 }
 
-const getTimes = (times) => {
+const getTimesParallel = (times, responses) => {
   return Promise.all(
-    '0'.repeat(times).split('').map(get)
+    '0'.repeat(times).split('').map(() => get(responses))
   )
+}
+
+const getTimesSequential = async (times, responses) => {
+  for (let i = 0; i < times; i++) {
+    await get(responses)
+  }
 }
 
 module.exports = {
   get,
-  getTimes,
+  getTimesParallel,
+  getTimesSequential,
 }

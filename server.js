@@ -1,41 +1,27 @@
 const express = require('express')
 const volleyball = require('volleyball')
-const axios = require('axios')
 const app = express()
-// const { getTimes } = require('./client')
+const { getTimesParallel, getTimesSequential } = require('./client')
 
 // app.use(volleyball)
 
 app.get('/', (req, res, next) => {
+  // next("OOOPS")
   res.json({
     message: "Here's your response"
   })
 })
 
-let numResponses = 0
+app.use((err, req, res, next) => {
+  console.log('ERR', err)
+  res.sendStatus(500)
+})
 
-const get = async () => {
-  // console.log('BEFORE')
-  const { data: { message } } = await axios.get('http://localhost:3000/')
-  numResponses++
-  // console.log('AFTER', message)
-}
-
-const getTimes = (times) => {
-  return Promise.all(
-    '0'.repeat(times).split('').map(get)
-  )
-}
-
-const getTimesSequential = async (times) => {
-  for (let i = 0; i < times; i++) {
-    await get()
-  }
-}
+let responses = { counter: 0 }
 
 const PORT = 3000
 app.listen(PORT, async () => {
   console.log(`Listening on port ${PORT}`)
-  await getTimesSequential(1000)
-  console.log('RESPONSES:', numResponses)
+  await getTimesParallel(500, responses)
+  console.log('RESPONSES:', responses.counter)
 })
