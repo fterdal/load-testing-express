@@ -1,10 +1,14 @@
 const axios = require('axios')
 
 const get = async (responses) => {
-  await axios.get('http://localhost:3000/')
-  responses.counter++
-  if (responses.counter % 10 === 0) {
-    console.log(responses.counter)
+  try {
+    await axios.get('http://localhost:3000/')
+    responses.counter++
+    if (responses.counter % 10 === 0) {
+      console.log(responses.counter)
+    }
+  } catch (err) {
+    console.error('ERR', err.message)
   }
 }
 
