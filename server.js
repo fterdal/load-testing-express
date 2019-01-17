@@ -22,6 +22,6 @@ let responses = { counter: 0 }
 const PORT = 3000
 app.listen(PORT, async () => {
   console.log(`Listening on port ${PORT}`)
-  await getTimesParallel(500, responses)
+  await getTimesParallel(800, responses)
   console.log('RESPONSES:', responses.counter)
 })

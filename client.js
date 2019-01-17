@@ -3,6 +3,9 @@ const axios = require('axios')
 const get = async (responses) => {
   await axios.get('http://localhost:3000/')
   responses.counter++
+  if (responses.counter % 10 === 0) {
+    console.log(responses.counter)
+  }
 }
 
 const getTimesParallel = (times, responses) => {
